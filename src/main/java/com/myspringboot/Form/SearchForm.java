@@ -17,7 +17,7 @@ public class SearchForm {
 	
 	@Size(max=11)
 	private String tel;
-	@MyAnnotation(value = 3)
+	//@MyAnnotation(value = 3)
 	private String name;
    
 	private List<Customer> customers = new ArrayList<>();

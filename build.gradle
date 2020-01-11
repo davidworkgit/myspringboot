@@ -3,6 +3,14 @@ plugins {
 	id 'io.spring.dependency-management' version '1.0.8.RELEASE'
 	id 'java'
 }
+ext {
+    // Mybatis Generator
+	mybatisMapperVersion = '4.1.5'
+	mybatisGeneratorVersion = '1.4.0'
+
+    // Mysql
+	mysqlConnectorJavaVersion = '8.0.18'
+    }
 
 group = 'com'
 version = '0.0.1-SNAPSHOT'
@@ -16,6 +24,7 @@ configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
 	}
+	mybatisGenerator
 }
 
 repositories {
@@ -36,8 +45,51 @@ dependencies {
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
+	// Mybatis Generator évßB
+    mybatisGenerator group: 'org.mybatis.generator', name: 'mybatis-generator-core', version: mybatisGeneratorVersion
+    mybatisGenerator group: 'mysql', name: 'mysql-connector-java', version: mysqlConnectorJavaVersion
+    mybatisGenerator group: 'tk.mybatis', name: 'mapper', version: mybatisMapperVersion
 }
 
 test {
 	useJUnitPlatform()
 }
+
+//**************************************
+// Mybatis Generator task
+//**************************************
+
+task mybatisGenerator {
+    doLast {
+        def properties = new Properties()
+        file('src/main/resources/mybatis/generator_config.properties').withInputStream { inputStream ->
+            properties.load(inputStream)
+        }
+        ant.properties['targetProject'] = properties.getProperty('target.project')
+        ant.properties['driverClass'] = properties.getProperty('db.driverClassName')
+        ant.properties['connectionURL'] = properties.getProperty('db.url')
+        ant.properties['userId'] = properties.getProperty('db.username')
+        ant.properties['password'] = properties.getProperty('db.password')
+        ant.properties['schema'] = properties.getProperty('db.schema')
+        ant.properties['modelPackage'] = properties.getProperty('package.model')
+        ant.properties['mapperPackage'] = properties.getProperty('package.mapper')
+        ant.taskdef(name: 'mbgenerator', classname: 'org.mybatis.generator.ant.GeneratorAntTask', classpath: configurations.mybatisGenerator.asPath)
+        ant.mbgenerator(overwrite: true, configfile: 'E:/Git/myspringboot/src/main/resources/mybatis/generator_config.xml', verbose: true) {
+            propertyset {
+                propertyref(name: 'targetProject')
+                propertyref(name: 'userId')
+                propertyref(name: 'driverClass')
+                propertyref(name: 'connectionURL')
+                propertyref(name: 'password')
+                propertyref(name: 'masterSchema')
+                propertyref(name: 'userSchema')
+                propertyref(name: 'modelPackage')
+                propertyref(name: 'mapperPackage')
+                propertyref(name: 'sqlMapperPackage')
+            }
+        }
+    }
+}
+
+// mybatisGenerator¤Î¥¿¥¹¥¯¥°¥ë©`¥×¤òmybatis¤Ë¤·¤Æ¤ª¤¯
+mybatisGenerator.group = 'mybatis'
