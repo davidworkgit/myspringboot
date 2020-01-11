@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head> 
+    <title>Getting Started: Serving Web Content</title> 
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+   <form th:action="@{/search}" method="post" th:object="${form}">
+	    <label>電話番号</label><br>
+	    <input type="text" th:field="*{tel}"><br>
+	    <p th:if="${#fields.hasErrors('tel')}" th:errors="*{tel}">Incorrect date</p>
+	    <label>カナ</label><br>
+	    <input type="text" th:field="*{name}"><br>
+	    <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Incorrect date</p>
+	    <button type="submit">検索</button>
+	     <table>
+	        <tr th:each="Item : ${form.customers}">
+	            <td><label type="text"
+	                    th:text="${Item.custId}" /></td>
+	            <td><label type="text"
+	                    th:text="${Item.custName}" /></td>
+	            <td><label type="text"
+	                    th:text="${Item.tel}" /></td>
+                <td><label type="text"
+	                    th:text="${Item.address}" /></td>
+	        </tr>
+        </table>
+    </form>
+</body>
+</html>
