@@ -13,7 +13,7 @@ import javax.validation.Payload;
 @Constraint(validatedBy = {MyAnnotationValidator.class})
 public @interface MyAnnotation {
 
-	String message() default "myannotationtest";
+	String message() default "{javax.validation.constraints.Myannotation.message}";
 
 	Class<?>[] groups() default { };
 	

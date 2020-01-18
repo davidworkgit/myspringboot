@@ -11,6 +11,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.myspringboot.Form.SearchForm;
 import com.myspringboot.model.Employee;
@@ -27,8 +29,9 @@ public class searchController {
 	public String search(@ModelAttribute("form") SearchForm searchform) {
 		return "search";
 	}
-	@PostMapping("/search")
-	public String searchbycon(@ModelAttribute("form") @Valid SearchForm searchform, BindingResult bindingResult) {
+	
+	@RequestMapping(value="/search", params={"search"})
+	public String search(@ModelAttribute("form") @Valid SearchForm searchform, BindingResult bindingResult) {
 		
 		if (bindingResult.hasErrors()) {
 		      return "search";
@@ -41,6 +44,13 @@ public class searchController {
 		
 		
 		return "search";
+	}
+	
+	@RequestMapping(value="/search",method = RequestMethod.POST, params={"download"})
+	public String download(@ModelAttribute("form") SearchForm searchform) {
+		int a = 1;
+	   
+	    return "search";
 	}
 
 }

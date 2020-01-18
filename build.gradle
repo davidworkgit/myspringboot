@@ -39,14 +39,18 @@ dependencies {
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	implementation 'com.microsoft.sqlserver:mssql-jdbc'
 	
+	//implementation files('lib/myjava.jar')
+	//implementation files('lib/mybatis-generator.jar')
+	
 	implementation 'mysql:mysql-connector-java'
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
-	// Mybatis Generator évßB
-    mybatisGenerator group: 'org.mybatis.generator', name: 'mybatis-generator-core', version: mybatisGeneratorVersion
+	// Mybatis Generator ï¿½vï¿½B
+    //mybatisGenerator group: 'org.mybatis.generator', name: 'mybatis-generator-core', version: mybatisGeneratorVersion
+    mybatisGenerator files('lib/mybatis-generator.jar')
     mybatisGenerator group: 'mysql', name: 'mysql-connector-java', version: mysqlConnectorJavaVersion
     mybatisGenerator group: 'tk.mybatis', name: 'mapper', version: mybatisMapperVersion
 }
@@ -56,7 +60,7 @@ test {
 }
 
 //**************************************
-// Mybatis Generator task
+// Mybatis Generator task configurations.mybatisGenerator.asPath
 //**************************************
 
 task mybatisGenerator {
@@ -74,7 +78,7 @@ task mybatisGenerator {
         ant.properties['modelPackage'] = properties.getProperty('package.model')
         ant.properties['mapperPackage'] = properties.getProperty('package.mapper')
         ant.taskdef(name: 'mbgenerator', classname: 'org.mybatis.generator.ant.GeneratorAntTask', classpath: configurations.mybatisGenerator.asPath)
-        ant.mbgenerator(overwrite: true, configfile: 'E:/Git/myspringboot/src/main/resources/mybatis/generator_config.xml', verbose: true) {
+        ant.mbgenerator(overwrite: true, configfile: 'E:/Git/myspringboot/src/main/resources/mybatis/generator_config.xml', verbose: false) {
             propertyset {
                 propertyref(name: 'targetProject')
                 propertyref(name: 'userId')
@@ -91,5 +95,5 @@ task mybatisGenerator {
     }
 }
 
-// mybatisGenerator¤Î¥¿¥¹¥¯¥°¥ë©`¥×¤òmybatis¤Ë¤·¤Æ¤ª¤¯
+// mybatisGeneratorï¿½Î¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½`ï¿½×¤ï¿½mybatisï¿½Ë¤ï¿½ï¿½Æ¤ï¿½ï¿½ï¿½
 mybatisGenerator.group = 'mybatis'

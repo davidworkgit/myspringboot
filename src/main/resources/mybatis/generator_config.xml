@@ -25,13 +25,15 @@
  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 <generatorConfiguration>
   <context id="simple" targetRuntime="MyBatis3Simple">
-   <jdbcConnection driverClass="${driverClass}" connectionURL="${connectionURL}" userId="${userId}" password="${password}"/>
 
-    <javaModelGenerator targetPackage="${modelPackage}" targetProject="${targetProject}"/>
+   <jdbcConnection driverClass="${driverClass}" connectionURL="${connectionURL}" userId="${userId}" password="${password}">
+   <property name="nullCatalogMeansCurrent" value="true" />
+   </jdbcConnection>
 
-    <sqlMapGenerator targetPackage="${mapperPackage}" targetProject="${targetProject}"/>
+     <javaModelGenerator targetPackage="${modelPackage}" targetProject="${targetProject}"/>
+     <javaClientGenerator targetPackage="${mapperPackage}" targetProject="${targetProject}" type="ANNOTATEDMAPPER"/>
 
 
-    <table tableName="customer" />
+    <table schema="KIDDA_LA" tableName="%" />
   </context>
 </generatorConfiguration>
