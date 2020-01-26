@@ -37,21 +37,24 @@ dependencies {
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.1'
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	implementation 'com.microsoft.sqlserver:mssql-jdbc'
+	implementation 'com.microsoft.sqlserver:mssql-jdbc:7.0.0.jre8'
 	
 	//implementation files('lib/myjava.jar')
 	//implementation files('lib/mybatis-generator.jar')
 	
-	implementation 'mysql:mysql-connector-java'
+	//implementation 'mysql:mysql-connector-java'
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
 	// Mybatis Generator �v�B
-    //mybatisGenerator group: 'org.mybatis.generator', name: 'mybatis-generator-core', version: mybatisGeneratorVersion
-    mybatisGenerator files('lib/mybatis-generator.jar')
-    mybatisGenerator group: 'mysql', name: 'mysql-connector-java', version: mysqlConnectorJavaVersion
+    mybatisGenerator group: 'org.mybatis.generator', name: 'mybatis-generator-core', version: mybatisGeneratorVersion
+    //mybatisGenerator files('lib/mybatis-generator.jar')
+    
+    //mybatisGenerator group: 'mysql', name: 'mysql-connector-java', version: mysqlConnectorJavaVersion
+    mybatisGenerator group: 'com.microsoft.sqlserver', name: 'mssql-jdbc', version: '7.0.0.jre8'
+    
     mybatisGenerator group: 'tk.mybatis', name: 'mapper', version: mybatisMapperVersion
 }
 
