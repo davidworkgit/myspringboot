@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.myspringboot.Form.SearchForm;
 import com.myspringboot.model.Employee;
@@ -53,4 +54,13 @@ public class searchController {
 	    return "search";
 	}
 
+	@RequestMapping(value = "/customerInsert" , method = RequestMethod.GET)
+    @ResponseBody
+    public String customerInsert(SearchForm.Customer searchform) {
+ 
+		searchform.setCustid(customerRepository.findMaxid());
+		customerRepository.insert(searchform);
+        return "success";
+    }
 }
+

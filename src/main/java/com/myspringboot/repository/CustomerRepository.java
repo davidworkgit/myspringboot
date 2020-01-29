@@ -22,12 +22,15 @@ public interface CustomerRepository {
     @Delete("DELETE FROM customer WHERE custid = #{custid}")
     public int deleteById(long custid);
 
-    @Insert("INSERT INTO customer(custid, custname, kana,tel,adress) " +
-        " VALUES (#{custid}, #{custname}, #{kana}, #{tel}, #{adress})")
+    @Insert("INSERT INTO customer(custid, custname, kana,tel,address) " +
+        " VALUES (#{custid}, #{custname}, #{kana}, #{tel}, #{address})")
     public int insert(Customer customer);
 
     @Update("Update customer set custid=#{custid}, " +
         " custname=#{custname}, kana=#{kana}," +
         " tel=#{tel}, adress=#{adress}," +	"where custid=#{custid}")
     public int update(Customer customer);
+    
+    @SelectProvider(type = CustomerSqlProvider.class, method = "findMaxid")
+    public int findMaxid();
 }

@@ -23,12 +23,13 @@ public class SearchForm {
 	private List<Customer> customers = new ArrayList<>();
 	@Data
 	public static class Customer{
-	   	private int custId;
-		private String custName;	 
+	   	private int custid;
+		private String custname;	 
 		private String kana;
 		private String tel;
 		private String address;
 	}
-	   
+	
+	private Customer customerModal = new Customer();
 
 }

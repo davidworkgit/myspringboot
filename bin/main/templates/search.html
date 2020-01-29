@@ -22,7 +22,9 @@
 				<p th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Incorrect date</p>
 			</div>
 			<div class="form-group">
-				<button type="submit" class="btn btn-primary" name="search">検索</button>
+				<button type="submit" class="btn btn-primary" id="search" name="search">検索</button>
+				<a class="btn btn-info" id="cusinsert"
+                    data-toggle="modal" data-target="#modal-cus-insert">追加</a>
 				<button type="submit" class="btn btn-info" name="download">download</button>
 			</div>
 			 <table class="table table-bordered">
@@ -37,9 +39,9 @@
 			    <tbody>
 				    <tr th:each="Item:${form.customers}">
 				        <td><label type="text"
-				                th:text="${Item.custId}" /></td>
+				                th:text="${Item.custid}" /></td>
 				        <td><label type="text" 
-				                th:text="${Item.custName}" /></td>
+				                th:text="${Item.custname}" /></td>
 				        <td><label type="text"
 				                th:text="${Item.tel}" /></td>
 				        <td><label type="text" 
@@ -49,5 +51,29 @@
 			</table>
 		</form>  
 	</div>
+	<div th:replace="modal/customerInsertModal::customerInsertModal"></div>
+	<script th:inline="javascript">
+        /*<![CDATA[*/
+            $(document).on("click","#btn-modal-insert", function() {
+                var form = $('#customerInsert')
+                $.ajax({
+				url: "/customerInsert", // 送信先 URL
+				type: "GET", // GET,POSTとか
+				dataType: 'json',
+				data: form.serialize()
+				}).done(function(data) {
+					// 通信成功時の処理
+					$('#mess').text(data);
+				}).fail(function(data) {
+					// 通信失敗時の処理
+					console.dir(data);
+				}).always(function(data) {
+					// 常に実行する処理
+					$("#modal-cus-insert").modal('hide'); // モーダルを閉じる
+					$("#search").click();
+				});
+            });
+        /*]]>*/
+    </script>
 </body>
 </html>

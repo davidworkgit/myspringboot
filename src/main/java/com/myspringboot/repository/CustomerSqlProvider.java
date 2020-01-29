@@ -13,4 +13,10 @@ public class CustomerSqlProvider {
         }}.toString();
     }
 
+	public String findMaxid() {
+        return new SQL() {{
+            SELECT("max(custid) + 1");
+            FROM("customer");
+        }}.toString();
+    }
 }
