@@ -11,18 +11,31 @@
 <body>
 	<div class="container">
 		<form th:action="@{/search}" th:object="${form}" method="post" >
+			<!--
 			<div class="form-group">
 				<label>電話番号</label><br>
 				<input type="text" th:field="*{tel}"><br>
 				<p th:if="${#fields.hasErrors('tel')}" th:errors="*{tel}">Incorrect date</p>
 			</div>
+			-->
+			<div class="form-group">
+				<label>電話番号</label><br>
+				<select class="form-control" id="testOrder" th:field="${form.tel}" onchange="this.form.submit()">
+			        <option value="">Select Test Order</option>
+			        <option th:each="customer : ${form.customers}"
+			                th:value="${customer.tel}"
+			                th:text="${customer.custname}"></option>
+			    </select>
+			</div>
+		    
+			
 			<div class="form-group">	
 				<label>カナ</label><br>
 				<input type="text" th:field="*{name}"><br>
 				<p th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Incorrect date</p>
 			</div>
 			<div class="form-group">
-				<button type="submit" class="btn btn-primary" id="search" name="search">検索</button>
+				<button type="submit" class="btn btn-primary" >検索</button>
 				<a class="btn btn-info" id="cusinsert"
                     data-toggle="modal" data-target="#modal-cus-insert">追加</a>
 				<button type="submit" class="btn btn-info" name="download">download</button>

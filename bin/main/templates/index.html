@@ -3,27 +3,43 @@
 <head> 
     <title>Getting Started: Serving Web Content</title> 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </head>
 <body>
     <p th:text="'Hello, ' + ${name} + '!'" />
-    <table>
-    <thead>
-        <tr>
-            <th><input type="checkbox" /></th>
-            <th>Unique Item Code</th>
-            <th>Item Name</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr th:each="mItem : ${Item}">
-            <td><label type="text"
-                    th:text="${mItem.firstName}" /></td>
-            <td><label type="text"
-                    th:text="${mItem.lastName}" /></td>
-            <td><label type="text"
-                    th:text="${mItem.emailaddress}" /></td>
-        </tr>
-    </tbody>                            
-</table>
+    <form th:action="@{/test}" th:object="${form}" method="post" >
+    	<input style="background-color:transparent;border: 0;font-size: 1em;" class="form-control" type="text" th:field="*{name}" readonly>
+    	<!-- 
+    	<input type="text" th:field="*{name}" readonly>
+    	<input type="text" name="customers[266].custname"> 
+    	 -->
+    	<button type="submit" class="btn btn-primary" >検索</button>
+    
+   		<table class="table table-bordered">
+		 	<thead class="thead-dark">
+		      <tr>
+		        <th>用户ID</th>
+		        <th>用户名</th>
+		        <th>电话号码</th>
+		        <th>用户地址</th>
+		      </tr>
+		    </thead>
+		    <tbody>
+			    <tr th:each="Item:${form.customers}">
+			        <td><label type="text"
+			                th:text="${Item.custid}" /></td>
+			        <td><label type="text" 
+			                th:text="${Item.custname}" /></td>
+			        <td><label type="text"
+			                th:text="${Item.tel}" /></td>
+			        <td><label type="text" 
+			                th:text="${Item.address}" /></td>
+			    </tr>
+		    </tbody>
+		</table>
+	</form>	
 </body>
 </html>

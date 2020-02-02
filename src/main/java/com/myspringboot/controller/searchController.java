@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.myspringboot.Form.SearchForm;
 import com.myspringboot.model.Employee;
@@ -27,11 +28,15 @@ public class searchController {
 	@Autowired
     private CustomerRepository customerRepository;
 	@GetMapping("/search")
-	public String search(@ModelAttribute("form") SearchForm searchform) {
-		return "search";
+	public ModelAndView search(@ModelAttribute("form") SearchForm searchform) {
+		ModelAndView mav = new ModelAndView();
+		searchform.setCustomers(customerRepository.findAll());
+		//mav.addObject("form", searchform);
+		mav.setViewName("search");
+		return mav;
 	}
 	
-	@RequestMapping(value="/search", params={"search"})
+	@RequestMapping(value="/search")
 	public String search(@ModelAttribute("form") @Valid SearchForm searchform, BindingResult bindingResult) {
 		
 		if (bindingResult.hasErrors()) {
